@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './LoginForm.css';
 import { FaUser, FaEye, FaEyeSlash} from "react-icons/fa";
-import logo from 'C:/Users/nourb/OneDrive/Bureau/Projet-RH/login_page/src/Components/Assets/i3S_RVB_Couleur.png';
+import logo from 'C:/Users/fakir/Desktop/Project_DS4H/src/Components/Assets/i3S_RVB_Couleur.png';
 //import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
