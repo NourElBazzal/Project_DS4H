@@ -17,11 +17,10 @@
 }
 
 .wrapper{
-    width: 420px;
+    width: 400px;
     background:  transparent;
     backdrop-filter: blur(30px);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: rgba(22, 22, 22, 0.377);
     background-color: #fff;
     border: 1px solid #ddd;
     color: rgb(48, 109, 173);
@@ -35,15 +34,57 @@
     text-align: center;
 }
 
+
 .wrapper .input-box{
     position: relative;
     width: 100%;
     height: 50px;
     margin: 30px 0;
+    /*
     border: 1px solid #ddd;
-    border-radius: 10px;
+    border-radius: 10px;*/
+    
 }
 
+.input-field {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #bbb;
+    padding: 0;
+    font-size: 0.95rem;
+    color: rgb(82, 84, 87);
+    transition: 0.4s;
+  }
+
+  .input-box input::placeholder{
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-5%);
+    font-size: 0.95rem;
+    color: #bbb;
+    pointer-events: none;
+    transition: 0.4s;
+  }
+
+  .input-field.active {
+    border-bottom-color: #151111;
+  }
+  
+ 
+
+  .input-box input:focus::placeholder,
+.input-box.not-empty input::placeholder {
+    top: -1px;
+    font-size: 0.75rem;
+    color: rgb(106, 113, 121);
+}
+  
+/*
 .input-box input{
     width: 100%;
     height: 100%;
@@ -76,7 +117,7 @@
     top: -10px;
     font-size: 12px;
     color: rgb(106, 113, 121);
-}
+}*/
 
 .input-box .icon{
     position: absolute;
@@ -108,7 +149,6 @@
     text-decoration: underline;
 }
 
-/* Button with left-to-right hover effect */
 .wrapper button {
     position: relative;
     width: 100%;
@@ -128,6 +168,7 @@
 .wrapper button:hover{
     background-color: rgb(41, 82, 126);
     color: #fff;
+
 }
 
 .wrapper button span {
@@ -167,6 +208,6 @@
     }
 
     .image-container{
-        margin-left: 30px;
+        margin-left: 160px;
     }
 }

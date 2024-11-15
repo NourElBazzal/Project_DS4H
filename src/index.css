@@ -11,3 +11,10 @@
   font-weight: bold;
   font-style: normal;
 }
+
+body{
+  font-family: 'IBM Plex Sans';
+  src: url('./Components/Assets/Polices i3S - IBM Plex Sans/IBMPlexSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
