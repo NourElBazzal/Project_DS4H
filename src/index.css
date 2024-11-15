@@ -1,39 +1,21 @@
 @font-face {
   font-family: 'IBM Plex Sans';
+<<<<<<< HEAD
   src: url('./Components/Assets/Polices i3S - IBM Plex Sans/IBMPlexSans-Regular.ttf') format('truetype'); 
+=======
+  src: url('./Components/Assets/Polices i3S - IBM Plex Sans/IBMPlexSans-Regular.ttf') format('truetype');
+>>>>>>> 67b6eebb516675e739032add8e6251de43355148
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'IBM Plex Sans';
+<<<<<<< HEAD
   src: url('./Components/Assets/Polices i3S - IBM Plex Sans/IBMPlexSans-Bold.ttf') format('truetype'); 
+=======
+  src: url('./Components/Assets/Polices i3S - IBM Plex Sans/IBMPlexSans-Bold.ttf') format('truetype');
+>>>>>>> 67b6eebb516675e739032add8e6251de43355148
   font-weight: bold;
   font-style: normal;
-}
-
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'IBM Plex Sans', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-size: cover;
-  background-position: center;
-
-
-}
-
-code {
-  /*font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;*/
-  font-family: 'IBM Plex Sans', sans-serif;
 }
