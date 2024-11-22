@@ -14,7 +14,27 @@
 
 body{
   font-family: 'IBM Plex Sans';
-  src: url('./Components/Assets/Polices i3S - IBM Plex Sans/IBMPlexSans-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+}
+
+.content{
+  height: 100%;
+  width: 100%;
+}
+
+::-webkit-scrollbar{
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track{
+  background: #e0e0e0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb{
+  background: #888;
+}
+
+::-webkit-scrollbar-track:hover{
+  background: #555;
 }
