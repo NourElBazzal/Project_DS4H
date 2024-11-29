@@ -9,11 +9,11 @@ const App= () => {
   return (
       <Router>
       <Routes>
-        <Route path="/LoginForm" element={<LoginForm />} />
+        <Route path="/" element={<LoginForm />} />
         
         {/* Routes with MainLayout */}
         <Route element={<MainLayout />}>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
           </Route>
 
       </Routes>
