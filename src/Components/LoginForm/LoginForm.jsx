@@ -58,7 +58,7 @@ const LoginForm = () => {
 
             <div className="remember-forget">
                 <label><input type="checkbox"/>Se souvenir de moi</label>
-                <a href="#">Mot de pass oublié?</a>
+                <a href="/">Mot de pass oublié?</a>
             </div>
 
             <button type="submit"><span>Se connecter</span></button>
