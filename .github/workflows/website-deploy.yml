@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - master
-    paths:
-      - '.github/workflows/website-deploy.yml'
-      - '/**'
 
 jobs:
   deploy:
