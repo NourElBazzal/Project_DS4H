@@ -27,23 +27,27 @@ const HomePage = () => {
     return <div>Chargement des données...</div>;
   }
 
-  return (
-    <div className="home-page">
-      <h1>Vue du Noeud Courant</h1>
-      <h2>ID: {data.id}</h2>
+  if (!data) {
+    return <div>Erreur: Les données sont nulles.</div>;
+  }
 
-      <h3>Vues Disponibles:</h3>
-      <ul>
-        {data.views.map((view, index) => (
-          <li key={index}>
-            <strong>{view.name}</strong>: {view.contentType}
-            {view.content && (
-              <pre>{JSON.stringify(view.content, null, 2)}</pre> // Affiche le contenu de la vue si disponible
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
+  return (
+      <div className="home-page">
+        <h1>Vue du Noeud Courant</h1>
+        <h2>ID: {data.id}</h2>
+
+        <h3>Vues Disponibles:</h3>
+        <ul>
+          {data.views.map((view, index) => (
+              <li key={index}>
+                <strong>{view.name}</strong>: {view.contentType}
+                {view.content && (
+                    <pre>{JSON.stringify(view.content, null, 2)}</pre> // Affiche le contenu de la vue si disponible
+                )}
+              </li>
+          ))}
+        </ul>
+      </div>
   );
 };
 
