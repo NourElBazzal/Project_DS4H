@@ -44,8 +44,8 @@ const Sidebar = () => {
             onClick={() => setCollapsed(!collapsed)}
           />
           {!collapsed && (
-            <div style={{ marginTop: "10px" }}>
-              <h3 style={{ margin: 0, color: "rgb(48, 109, 173)", fontSize:"30px", fontFamily:"'IBM Plex Sans', sans-serif"}}>I3S</h3>
+            <div style={{ marginTop: "10px", fontFamily:"'IBM Plex Sans', sans-serif" }}>
+              <h3 style={{ margin: 0, color: "rgb(48, 109, 173)", fontSize:"30px"}}>I3S</h3>
             </div>
           )}
         </div>
@@ -57,7 +57,7 @@ const Sidebar = () => {
           {views.map((view, index) => (
               <MenuItem key={index} icon={<MenuOutlinedIcon />}>
                 {view.name}
-                <Link to={`/view/${view.name}`} /> {/* Lis selon les vues trouvées */}
+                <Link to={`/information/${index}`} /> {/* Lis selon les vues trouvées */}
               </MenuItem>
           ))}
         </Menu>
