@@ -128,12 +128,12 @@
     color: rgb(41, 82, 126);
     font-weight: 700;
     overflow: hidden;
+    transition: background-color 250ms ease, color 250ms ease  ;
 }
 
 .wrapper button:hover{
     background-color: rgb(41, 82, 126);
     color: #fff;
-
 }
 
 .wrapper button span {
