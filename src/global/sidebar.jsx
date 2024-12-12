@@ -24,10 +24,11 @@ const Sidebar = () => {
     // Fetch the views data from the backend API
     const fetchViews = async () => {
       try {
-        const response = await axios.get('http://dronic.i3s.unice.fr:8080/?username=user&password=test');
+        const response = await axios.get('https://dronic.i3s.unice.fr:8080/?username=user&password=test');
         setViews(response.data.views);  // Set the fetched views into state
       } catch (error) {
         console.error('Error fetching views:', error);
+        console.log(error);
       }
     };
 
@@ -44,7 +45,7 @@ const Sidebar = () => {
           />
           {!collapsed && (
             <div style={{ marginTop: "10px" }}>
-              <h3 style={{ margin: 0, color: "rgb(48, 109, 173)", fontSize:"30px" }}>I3S</h3>
+              <h3 style={{ margin: 0, color: "rgb(48, 109, 173)", fontSize:"30px", fontFamily:"'IBM Plex Sans', sans-serif"}}>I3S</h3>
             </div>
           )}
         </div>
@@ -52,58 +53,12 @@ const Sidebar = () => {
 
       <SidebarContent>
         <Menu iconShape="circle">
-          {/* Static Menu Items */}
-          <MenuItem icon={<HomeOutlinedIcon />}>
-            Dashboard
-            <Link to="/" />
-          </MenuItem>
-          <MenuItem icon={<PeopleOutlinedIcon />}>
-            Manage Team
-            <Link to="/LoginForm" />
-          </MenuItem>
-          <MenuItem icon={<ContactsOutlinedIcon />}>
-            Contacts
-            <Link to="/contacts" />
-          </MenuItem>
-          <MenuItem icon={<ReceiptOutlinedIcon />}>
-            Invoices
-            <Link to="/invoices" />
-          </MenuItem>
-          <MenuItem icon={<PersonOutlinedIcon />}>
-            Profile
-            <Link to="/form" />
-          </MenuItem>
-          <MenuItem icon={<CalendarTodayOutlinedIcon />}>
-            Calendar
-            <Link to="/calendar" />
-          </MenuItem>
-          <MenuItem icon={<HelpOutlineOutlinedIcon />}>
-            FAQ
-            <Link to="/faq" />
-          </MenuItem>
-          <MenuItem icon={<BarChartOutlinedIcon />}>
-            Bar Chart
-            <Link to="/bar" />
-          </MenuItem>
-          <MenuItem icon={<PieChartOutlineOutlinedIcon />}>
-            Pie Chart
-            <Link to="/pie" />
-          </MenuItem>
-          <MenuItem icon={<TimelineOutlinedIcon />}>
-            Line Chart
-            <Link to="/line" />
-          </MenuItem>
-          <MenuItem icon={<MapOutlinedIcon />}>
-            Geography
-            <Link to="/geography" />
-          </MenuItem>
-
-          {/* Dynamically generated Menu Items for each view fetched from the backend */}
+          {/* Génère dynamiquement en fonction des vues trouvées sur le backend */}
           {views.map((view, index) => (
-            <MenuItem key={index} icon={<HomeOutlinedIcon />}>
-              {view.name}
-              <Link to={`/view/${view.name}`} /> {/* Create a dynamic route based on the view name */}
-            </MenuItem>
+              <MenuItem key={index} icon={<MenuOutlinedIcon />}>
+                {view.name}
+                <Link to={`/view/${view.name}`} /> {/* Lis selon les vues trouvées */}
+              </MenuItem>
           ))}
         </Menu>
       </SidebarContent>
