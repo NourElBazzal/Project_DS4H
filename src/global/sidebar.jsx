@@ -42,7 +42,7 @@ const Sidebar = () => {
           </MenuItem>
           <MenuItem icon={<PeopleOutlinedIcon />}>
             Manage Team
-            <Link to="/LoginForm" />
+            <Link to="/team" />
           </MenuItem>
           <MenuItem icon={<ContactsOutlinedIcon />}>
             Contacts
@@ -66,7 +66,7 @@ const Sidebar = () => {
           </MenuItem>
           <MenuItem icon={<BarChartOutlinedIcon />}>
             Bar Chart
-            <Link to="/bar" />
+            <Link to="/barChart" />
           </MenuItem>
           <MenuItem icon={<PieChartOutlineOutlinedIcon />}>
             Pie Chart
