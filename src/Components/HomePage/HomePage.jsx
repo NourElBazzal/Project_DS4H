@@ -6,7 +6,6 @@ import useSWR from 'swr';
 
 const fetcher = url => axios.get(url).then(res => res.data)
 
-
 const HomePage = () => {
     const { data, error, isLoading:loading } = useSWR('https://dronic.i3s.unice.fr:8080/?username=user&password=test', fetcher);
 

@@ -6,13 +6,13 @@ import useSWR from 'swr';
 
 const fetcher = url => axios.get(url).then(res => res.data);
 
-
 const InformationPage = () => {
     const { viewName } = useParams();
     let { data, error, isLoading: loading } = useSWR(`https://dronic.i3s.unice.fr:8080/?username=user&password=test&view=${viewName}`, fetcher);
 
-  // Error state
-  if (error) return <div>Error loading data: {error.message}</div>;
+    if (loading) {
+        return <div className="spinner">Loading...</div>;
+    }
 
     if (error) {
         return <div>Error: {error.message}</div>;
