@@ -4,37 +4,25 @@ import "react-pro-sidebar/dist/css/styles.css";
 import { Link } from "react-router-dom";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import axios from "axios";
+import useSWR from 'swr';
+
+const fetcher = url => axios.get(url).then(res => res.data)
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [views, setViews] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchViews = async () => {
-      try {
-        const cachedViews = localStorage.getItem('views');
-        if (cachedViews) {
-          setViews(JSON.parse(cachedViews));
-          setLoading(false);
-        } else {
-          const response = await axios.get('https://dronic.i3s.unice.fr:8080/?username=user&password=test');
-          localStorage.setItem('views', JSON.stringify(response.data.views));
-          setViews(response.data.views);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error('Error fetching views:', error);
-        setLoading(false);
-      }
-    };
-
-    fetchViews();
-  }, []);
+  const { data, error, isLoading:loading } = useSWR('https://dronic.i3s.unice.fr:8080/?username=user&password=test', fetcher);
 
   if (loading) {
     return <div className="spinner">Loading...</div>;
   }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  const views = data.response.views;
+
+  console.log(views);
 
   return (
       <ProSidebar collapsed={collapsed}>
