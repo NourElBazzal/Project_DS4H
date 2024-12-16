@@ -1,0 +1,25 @@
+.home-page {
+    font-family: 'IBM Plex Sans', sans-serif;
+    padding: 20px;
+  }
+  
+  h1 {
+    color: #306da9;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin: 10px 0;
+  }
+  
+  pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
