@@ -3,6 +3,7 @@ import axios from 'axios';
 import './HomePage.css';
 import {Link} from "react-router-dom";
 
+
 const HomePage = () => {
   const [data, setData] = useState(null); // Etat pour stocker les données récupérées
   const [loading, setLoading] = useState(true); // Etat pour gérer le chargement
@@ -40,6 +41,7 @@ const HomePage = () => {
     return <div>Error: Data is null.</div>;
   }
 
+  
   return (
       <div className="home-page">
           <h1>Vue du Noeud Courant</h1>
