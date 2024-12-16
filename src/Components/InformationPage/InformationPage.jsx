@@ -1,45 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
-import useSWR from 'swr';
 import axios from 'axios';
 import './InformationPage.css';
+import useSWR from 'swr';
 
-// Fetcher function using Axios
-const fetcher = (url) => axios.get(url).then((res) => res.data);
+const fetcher = url => axios.get(url).then(res => res.data);
+
 
 const InformationPage = () => {
-    const backendURL = "https://dronic.i3s.unice.fr:8080/?username=user&password=test";
-
-    // Use SWR to fetch data
-  const { data, error, isLoading } = useSWR(backendURL, fetcher);
-
-  // Loading state
-  if (isLoading) return <div>Loading...</div>;
+    const { viewName } = useParams();
+    let { data, error, isLoading: loading } = useSWR(`https://dronic.i3s.unice.fr:8080/?username=user&password=test&view=${viewName}`, fetcher);
 
   // Error state
   if (error) return <div>Error loading data: {error.message}</div>;
 
-  // Extract "views" from data
-  const views = data?.response?.views || [];
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
 
-  // Render content
-  return (
-    <div>
-      <h1>Content from Backend</h1>
-      {views.length > 0 ? (
-        views.map((view, index) => (
-          view.content ? (
-            <div key={index}>
-              <h2>{view.name}</h2>
-              <pre>{typeof view.content === 'object' ? JSON.stringify(view.content, null, 2) : view.content}</pre>
+    if (!data) {
+        return <div>Error: Data is null.</div>;
+    }
+
+    const { data: content, headers } = data;
+
+    console.log(headers);
+
+    return (
+        <div className="information-page">
+            <h1>Information for View {viewName}</h1>
+            <div>
+                <h2>Content:</h2>
+                <pre>{JSON.stringify(data, null, 2)}</pre>
             </div>
-          ) : null
-        ))
-      ) : (
-        <p>No content available in views.</p>
-      )}
-    </div>
-  );
-}; 
+        </div>
+    );
+};
 
 export default InformationPage;
