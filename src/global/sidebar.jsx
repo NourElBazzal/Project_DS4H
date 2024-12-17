@@ -10,7 +10,7 @@ const fetcher = url => axios.get(url).then(res => res.data)
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const { data, error, isLoading:loading } = useSWR('https://dronic.i3s.unice.fr:8080/?username=user&password=test', fetcher);
+  const { data, error, isLoading:loading } = useSWR('https://dronic.i3s.unice.fr:8080/?username=user&password=test&endpoint=GetNodeInfo', fetcher);
 
   if (loading) {
     return <div className="spinner">Loading...</div>;
@@ -20,9 +20,7 @@ const Sidebar = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  const views = data.response.views;
-
-  console.log(views);
+  const views = data.result.views;
 
   return (
       <ProSidebar collapsed={collapsed}>
