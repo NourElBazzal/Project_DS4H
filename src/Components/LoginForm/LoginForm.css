@@ -3,11 +3,12 @@
     align-items: center;
     justify-content: center;
     height: 100vh; /* Full viewport height */
+    padding: 20px;
 }
 
 .image-container {
     max-width: 200px;
-    margin-left: 70px;
+    margin: 0 80px; 
 }
 
 .image-container img {
@@ -151,12 +152,26 @@
         flex-direction: column;
     }
 
-    .wrapper, .image-container {
-        margin: 0;
-        width: 100%; 
+    .wrapper {
+        width: 400px; 
+        margin: 0 auto;
     }
 
-    .image-container{
-        margin-left: 160px;
+    .image-container {
+        margin: 20px auto; 
+    }
+}
+
+@media (max-width: 480px) {
+    .wrapper {
+        padding: 20px; 
+    }
+
+    .input-box .icon {
+        font-size: 16px; 
+    }
+
+    .wrapper button {
+        font-size: 14px; 
     }
 }

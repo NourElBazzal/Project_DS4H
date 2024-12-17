@@ -72,10 +72,7 @@ const LoginForm = () => {
                         )}
                     </div>
                     {error && <p className="error-message">{error}</p>}
-                    <div className="remember-forget">
-                        <label><input type="checkbox" />Se souvenir de moi</label>
-                        <a href="/">Mot de passe oublié?</a>
-                    </div>
+                
                     <button type="submit"><span>Se connecter</span></button>
                 </form>
             </div>
