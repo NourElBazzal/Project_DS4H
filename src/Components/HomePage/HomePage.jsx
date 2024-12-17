@@ -7,7 +7,7 @@ import useSWR from 'swr';
 const fetcher = url => axios.get(url).then(res => res.data)
 
 const HomePage = () => {
-    const { data, error, isLoading:loading } = useSWR('https://dronic.i3s.unice.fr:8080/?username=user&password=test&endpoint=GetNodeInfo', fetcher);
+    const { data, error, isLoading:loading } = useSWR('https://dronic.i3s.unice.fr:8080/api?username=user&password=test&endpoint=GetNodeInfo', fetcher);
 
     if (loading) {
         return <div className="spinner">Loading...</div>;

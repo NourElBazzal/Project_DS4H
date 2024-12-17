@@ -21,7 +21,7 @@ const LoginForm = () => {
         e.preventDefault();
         try {
             // Send the login request to the backend
-            const response = await axios.get('https://dronic.i3s.unice.fr:8080/', {
+            const response = await axios.get('https://dronic.i3s.unice.fr:8080/api', {
                 params: { username, password },
             });
 

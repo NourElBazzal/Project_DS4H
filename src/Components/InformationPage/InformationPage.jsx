@@ -9,7 +9,7 @@ const fetcher = url => axios.get(url);
 
 const InformationPage = () => {
     const { viewName } = useParams();
-    let { data, error, isLoading: loading } = useSWR(`https://dronic.i3s.unice.fr:8080/?username=user&password=test&endpoint=GetViewContent&index=${viewName}`, fetcher);
+    let { data, error, isLoading: loading } = useSWR(`https://dronic.i3s.unice.fr:8080/api?username=user&password=test&endpoint=GetViewContent&index=${viewName}`, fetcher);
 
     const graphvizRef = useRef(null);
 
@@ -29,6 +29,8 @@ const InformationPage = () => {
             return <div dangerouslySetInnerHTML={{__html: content}} />;
         } else if (headers['content-type'] === 'image/svg+xml') {
             return <div dangerouslySetInnerHTML={{__html: content}} />;
+        } else if (headers['content-type'] === 'text/plain') {
+            return <pre>{content}</pre>;
         } else if (headers['content-type'] === 'image/png') {
             return <img src={`data:image/png;base64,${content}`} alt="PNG" />;
         } else if (headers['content-type'] === 'image/jpeg') {
@@ -60,7 +62,6 @@ const InformationPage = () => {
             <div>
                 <h2>Content:</h2>
                 {displayContent(content, headers)}
-                <pre>{JSON.stringify(data, null, 2)}</pre>
             </div>
         </div>
     );
