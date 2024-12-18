@@ -1,14 +1,20 @@
 import React from "react";
 import Sidebar from "./sidebar";
 import Topbar from "./topbar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
-const MainLayout = () => {
+const MainLayout = ({ onViewChange }) => {
+  const location = useLocation();
+
+  // Determine if the current path is `/viewer` (GridView page)
+  const hideSidebar = location.pathname === "/viewer";
+
   return (
     <div style={{ display: "flex" }}>
-      <Sidebar />
+      {/* Conditionally render Sidebar */}
+      {!hideSidebar && <Sidebar />}
       <div style={{ flex: 1 }}>
-        <Topbar />
+        <Topbar onViewChange={onViewChange} />
         <div style={{ padding: "20px" }}>
           <Outlet /> {/* Render child routes here */}
         </div>
