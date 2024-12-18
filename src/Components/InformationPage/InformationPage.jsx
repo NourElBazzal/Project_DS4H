@@ -25,41 +25,64 @@ const InformationPage = () => {
 
     const displayContent = (content, headers) => {
         if (headers['content-type'] === 'text/json') {
-            return <pre>{JSON.stringify(content, null, 2)}</pre>;
+            return (
+                <div className="content-container">
+                    <pre>{JSON.stringify(content, null, 2)}</pre>
+                </div>
+            );
         } else if (headers['content-type'] === 'text/html') {
-            return <div dangerouslySetInnerHTML={{__html: content}} />;
+            return (
+                <div className="content-container html-content">
+                    <div dangerouslySetInnerHTML={{__html: content}} />
+                </div>
+            );
         } else if (headers['content-type'] === 'image/svg+xml') {
-            return <div dangerouslySetInnerHTML={{__html: content}} />;
+            return (
+                <div className="content-container">
+                    <div dangerouslySetInnerHTML={{__html: content}} />
+                </div>
+            );
         } else if (headers['content-type'] === 'text/plain') {
-            return <pre>{content}</pre>;
-        } else if (headers['content-type'] === 'image/png') {
-            return <img src={`data:image/png;base64,${content}`} alt="PNG" />;
-        } else if (headers['content-type'] === 'image/jpeg') {
-            return <img src={`data:image/jpeg;base64,${content}`} alt="JPEG" />;
+            return (
+                <div className="content-container">
+                    <pre>{content}</pre>
+                </div>
+            );
+        } else if (headers['content-type'] === 'image/png' || headers['content-type'] === 'image/jpeg') {
+            return (
+                <div className="content-container">
+                    <img src={`data:${headers['content-type']};base64,${content}`} alt="Content" />
+                </div>
+            );
         } else if (headers['content-type'] === 'text/dot') {
-            return <div ref={graphvizRef} />;
+            return (
+                <div className="content-container graphviz-container">
+                    <div ref={graphvizRef} />
+                </div>
+            );
         } else {
-            return <pre>Unsupported content type: {headers['content-type']}</pre>;
+            return (
+                <div className="error-message">
+                    Unsupported content type: {headers['content-type']}
+                </div>
+            );
         }
     }
 
     if (loading) {
         return (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "100vh",
-            }}
-          >
-            <CircularProgress />
-          </div>
+            <div className="loading-container">
+                <CircularProgress />
+            </div>
         );
-      }
+    }
 
     if (error) {
-        return <div>Error: {error.message}</div>;
+        return (
+            <div className="information-page">
+                <div className="error-message">Error: {error.message}</div>
+            </div>
+        );
     }
 
     if (!data) {
