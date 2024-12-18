@@ -3,15 +3,27 @@ import axios from 'axios';
 import './HomePage.css';
 import {Link} from "react-router-dom";
 import useSWR from 'swr';
+import CircularProgress from "@mui/material/CircularProgress";
 
 const fetcher = url => axios.get(url).then(res => res.data)
 
 const HomePage = () => {
-    const { data, error, isLoading:loading } = useSWR('https://dronic.i3s.unice.fr:8080/?username=user&password=test&endpoint=GetNodeInfo', fetcher);
+    const { data, error, isLoading:loading } = useSWR('https://dronic.i3s.unice.fr:8080/api?username=user&password=test&endpoint=GetNodeInfo', fetcher);
 
     if (loading) {
-        return <div className="spinner">Loading...</div>;
-    }
+        return (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}
+          >
+            <CircularProgress />
+          </div>
+        );
+      }
 
     if (!data) {
         return <div>Error: Data is null.</div>;
