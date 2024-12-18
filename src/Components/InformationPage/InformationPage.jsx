@@ -7,12 +7,13 @@ import React, {useEffect, useRef} from 'react';
 import CircularProgress from "@mui/material/CircularProgress";
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
 import {materialLight} from "react-syntax-highlighter/src/styles/prism";
-
+import {useTitle} from "../../global/useTitle";
 
 const fetcher = url => axios.get(url);
 
 const InformationPage = () => {
     const {viewName} = useParams();
+
     let {
         data,
         error,
@@ -20,6 +21,8 @@ const InformationPage = () => {
     } = useSWR(`https://dronic.i3s.unice.fr:8080/api?username=user&password=test&endpoint=GetViewContent&index=${viewName}`, fetcher);
 
     const graphvizRef = useRef(null);
+
+    useTitle(`Information for View ${viewName}`);
 
     useEffect(() => {
         if (!data) return;
@@ -32,12 +35,11 @@ const InformationPage = () => {
 
     const displayContent = (content, headers) => {
         if (headers['content-type'] === 'text/json') {
-            return <SyntaxHighlighter language="json" style={materialLight}>
-                {JSON.stringify(content, null, "\t")}
-            </SyntaxHighlighter>
             return (
                 <div className="content-container">
-                    <pre>{JSON.stringify(content, null, 2)}</pre>
+                    <SyntaxHighlighter language="json" style={materialLight}>
+                        {JSON.stringify(content, null, 2)}
+                    </SyntaxHighlighter>
                 </div>
             );
         } else if (headers['content-type'] === 'text/html') {

@@ -4,6 +4,7 @@ import { FaUser, FaEye, FaEyeSlash } from "react-icons/fa";
 import logo from '../Assets/i3S_RVB_Couleur.png';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import {useTitle} from "../../global/useTitle";
 
 const LoginForm = () => {
     const [username, setUsername] = useState("");
@@ -12,6 +13,8 @@ const LoginForm = () => {
     const [error, setError] = useState(""); // Error handling
 
     const navigate = useNavigate();
+
+    useTitle("Login");
 
     const togglePasswordVisibility = () => {
         setPasswordVisible((prevState) => !prevState);

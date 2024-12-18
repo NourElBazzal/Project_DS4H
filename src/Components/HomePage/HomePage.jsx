@@ -4,11 +4,13 @@ import './HomePage.css';
 import {Link} from "react-router-dom";
 import useSWR from 'swr';
 import CircularProgress from "@mui/material/CircularProgress";
+import {useTitle} from "../../global/useTitle";
 
 const fetcher = url => axios.get(url).then(res => res.data)
 
 const HomePage = () => {
     const { data, error, isLoading:loading } = useSWR('https://dronic.i3s.unice.fr:8080/api?username=user&password=test&endpoint=GetNodeInfo', fetcher);
+    useTitle("Current Node View");
 
     if (loading) {
         return (
