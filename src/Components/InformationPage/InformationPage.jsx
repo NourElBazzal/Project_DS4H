@@ -8,8 +8,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import {useTitle} from "../../global/useTitle";
 import {ResponsiveBar} from "@nivo/bar";
 import {ResponsiveLine} from "@nivo/line";
-import SyntaxHighlighter from "react-syntax-highlighter/src/light";
-import {materialLight} from "react-syntax-highlighter/src/styles/prism";
+import CustomCodeBlock from "../../global/CustomCodeBlock.jsx";
 
 const fetcher = url => axios.get(url);
 
@@ -31,9 +30,13 @@ const InformationPage = () => {
     }, [data]);
 
     const displayContent = (content, headers) => {
+        if (!content) {
+            return <div className="error-message">No content available.</div>;
+        }
+
         if (headers['content-type'] === 'text/json+xy2') {
             const parsedChartData = parseNivoChartData(content);
-            console.log(parsedChartData)
+
             return (
                 <div style={{ height: 400,width: 800 }}>
                     <ResponsiveLine
@@ -164,9 +167,7 @@ const InformationPage = () => {
         } else if (headers['content-type'] === 'text/json') {
             return (
                 <div className="content-container">
-                    <SyntaxHighlighter language="json" style={materialLight}>
-                        {JSON.stringify(content, null, 2)}
-                    </SyntaxHighlighter>
+                    <CustomCodeBlock language="json" code={JSON.stringify(content, null, "\t")} />
                 </div>
             );
         } else if (headers['content-type'] === 'text/html') {
@@ -201,15 +202,11 @@ const InformationPage = () => {
             );
         } else if (headers['content-type'] === 'image/jsondot') {
             return <div className="content-container">
-                <SyntaxHighlighter language="json" style={materialLight}>
-                    {JSON.stringify(content, null, "\t")}
-                </SyntaxHighlighter>
+                <CustomCodeBlock language="json" code={JSON.stringify(content, null, "\t")} />
             </div>
         } else if (headers['content-type'] === 'text/java') {
             return <div className="content-container">
-                <SyntaxHighlighter language="java" style={materialLight}>
-                    {content}
-                </SyntaxHighlighter>
+                <CustomCodeBlock language="java" code={content} />
             </div>
         } else {
             return (
