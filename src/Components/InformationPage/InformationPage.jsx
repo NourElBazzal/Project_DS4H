@@ -32,9 +32,6 @@ const InformationPage = () => {
 
     const displayContent = (content, headers) => {
         if (headers['content-type'] === 'text/json') {
-            return <SyntaxHighlighter language="json" style={materialLight}>
-                {JSON.stringify(content, null, "\t")}
-            </SyntaxHighlighter>
             return (
                 <div className="content-container">
                     <pre>{JSON.stringify(content, null, 2)}</pre>
@@ -43,13 +40,13 @@ const InformationPage = () => {
         } else if (headers['content-type'] === 'text/html') {
             return (
                 <div className="content-container html-content">
-                    <div dangerouslySetInnerHTML={{__html: content}}/>
+                    <div dangerouslySetInnerHTML={{__html: content}} />
                 </div>
             );
         } else if (headers['content-type'] === 'image/svg+xml') {
             return (
                 <div className="content-container">
-                    <div dangerouslySetInnerHTML={{__html: content}}/>
+                    <div dangerouslySetInnerHTML={{__html: content}} />
                 </div>
             );
         } else if (headers['content-type'] === 'text/plain') {
@@ -61,27 +58,15 @@ const InformationPage = () => {
         } else if (headers['content-type'] === 'image/png' || headers['content-type'] === 'image/jpeg') {
             return (
                 <div className="content-container">
-                    <img src={`data:${headers['content-type']};base64,${content}`} alt="Content"/>
+                    <img src={`data:${headers['content-type']};base64,${content}`} alt="Content" />
                 </div>
             );
         } else if (headers['content-type'] === 'text/dot') {
             return (
                 <div className="content-container graphviz-container">
-                    <div ref={graphvizRef}/>
+                    <div ref={graphvizRef} />
                 </div>
             );
-        } else if (headers['content-type'] === 'image/jsondot') {
-            return <div className="content-container">
-                <SyntaxHighlighter language="json" style={materialLight}>
-                    {JSON.stringify(content, null, "\t")}
-                </SyntaxHighlighter>
-            </div>
-        } else if (headers['content-type'] === 'text/java') {
-            return <div className="content-container">
-                <SyntaxHighlighter language="java" style={materialLight}>
-                    {content}
-                </SyntaxHighlighter>
-            </div>
         } else {
             return (
                 <div className="error-message">
@@ -94,7 +79,7 @@ const InformationPage = () => {
     if (loading) {
         return (
             <div className="loading-container">
-                <CircularProgress/>
+                <CircularProgress />
             </div>
         );
     }
