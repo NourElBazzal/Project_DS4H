@@ -4,7 +4,6 @@ import {Outlet} from "react-router-dom";
 import {createTheme} from "@mui/material";
 import {router} from "./router";
 
-
 const theme = createTheme({
     cssVariables: true,
     colorSchemes: {
