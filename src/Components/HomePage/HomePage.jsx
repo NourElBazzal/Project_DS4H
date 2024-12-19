@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 import './HomePage.css';
 import {Link} from "react-router-dom";
@@ -9,7 +9,7 @@ import {useTitle} from "../../global/useTitle";
 const fetcher = url => axios.get(url).then(res => res.data)
 
 const HomePage = () => {
-    const { data, error, isLoading:loading } = useSWR('https://dronic.i3s.unice.fr:8080/api?username=user&password=test&endpoint=GetNodeInfo', fetcher);
+    const { data, isLoading:loading } = useSWR('https://dronic.i3s.unice.fr:8080/api?username=user&password=test&endpoint=GetNodeInfo', fetcher);
     useTitle("Current Node View");
 
     if (loading) {
