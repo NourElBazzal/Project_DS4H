@@ -1,9 +1,10 @@
 .information-page {
-    max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
     background-color: #f8f9fa;
-    min-height: 100vh;
+    animation: fadeIn 0.5s ease-out;
+    max-width: 100%;
+    width: 100%;
 }
 
 .information-page h1 {
@@ -118,8 +119,8 @@
     }
 }
 
-.information-page {
-    animation: fadeIn 0.5s ease-out;
+.information-page svg {
+    width: 100%;
 }
 
 /* Hover effects */

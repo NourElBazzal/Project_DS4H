@@ -6,6 +6,8 @@ import {ResponsiveBar} from "@nivo/bar";
 import CircularProgress from "@mui/material/CircularProgress";
 import {graphviz} from "d3-graphviz";
 import CustomCodeBlock from "../../global/CustomCodeBlock.jsx";
+import {ResponsiveNetwork} from "@nivo/network";
+import './View.css'
 
 const fetcher = url => axios.get(url);
 
@@ -61,7 +63,7 @@ export const View = ({viewId}) => {
                 const parsedChartData = parseNivoChartData(content);
 
                 return (
-                    <div style={{height: 400, width: 800}}>
+                    <div className="graph">
                         <ResponsiveLine
                             data={parsedChartData}
                             margin={{top: 50, right: 110, bottom: 50, left: 60}}
@@ -105,7 +107,7 @@ export const View = ({viewId}) => {
                 const barChartData = parseBarChartData(content);
                 const keys = Object.keys(Object.values(content).reduce((a, b) => Object.assign({}, a, b))).sort();
                 return (
-                    <div style={{height: 400, width: 800}}>
+                    <div className="graph">
                         <ResponsiveBar
                             data={barChartData}
                             keys={keys}
@@ -186,6 +188,34 @@ export const View = ({viewId}) => {
                         />
                     </div>
                 )
+            } else if (viewInfo.dialect === 'nivo') {
+                return (
+                    <div className="graph">
+                        <ResponsiveNetwork
+                            data={content}
+                            margin={{top: 0, right: 0, bottom: 0, left: 0}}
+                            linkDistance={e => e.distance}
+                            centeringStrength={0.3}
+                            repulsivity={6}
+                            nodeSize={n => n.size}
+                            activeNodeSize={n => 1.5 * n.size}
+                            nodeColor={e => e.color}
+                            nodeBorderWidth={1}
+                            nodeBorderColor={{
+                                from: 'color',
+                                modifiers: [
+                                    [
+                                        'darker',
+                                        0.8
+                                    ]
+                                ]
+                            }}
+                            linkThickness={n => 2 + 2 * n.target.data.height}
+                            linkBlendMode="multiply"
+                            motionConfig="wobbly"
+                        />
+                    </div>
+                );
             } else {
                 return (
                     <div className="content-container">
