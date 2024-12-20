@@ -58,34 +58,36 @@ const MainLayout = () => {
                                                  value={currentView}
                                                  onChange={handleViewChange}
                                                  sx={{
-                                                    "& .MuiSelect-root": {
-                                                        minWidth: 120,
-                                                        backgroundColor: "transparent", 
-                                                        border: "none !important",
-                                                        outline: "none !important",
-                                                        borderRadius: "4px",
-                                                        boxShadow: "none",
-                                                        "&:hover": {
-                                                            backgroundColor: "rgba(0, 0, 0, 0.05)",
-                                                        },
-                                                        "& .MuiSelect-icon": {
-                                                            color: "#000",
-                                                        },
-                                                    },
-                                                }}
-                                                MenuProps={{
-                                                    PaperProps: {
-                                                        sx: {
-                                                            backgroundColor: "#f5f5f5",
-                                                            borderRadius: "8px",
-                                                            boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
-                                                            mt: 1,
-                                                        },
-                                                    },
-                                                }}
+                                                     "& .MuiSelect-root": {
+                                                         minWidth: 120,
+                                                         backgroundColor: "transparent",
+                                                         border: "none !important",
+                                                         outline: "none !important",
+                                                         borderRadius: "4px",
+                                                         boxShadow: "none",
+                                                         "&:hover": {
+                                                             backgroundColor: "rgba(0, 0, 0, 0.05)",
+                                                         },
+                                                         "& .MuiSelect-icon": {
+                                                             color: "#000",
+                                                         },
+                                                     },
+                                                 }}
+                                                 MenuProps={{
+                                                     PaperProps: {
+                                                         sx: {
+                                                             backgroundColor: "#f5f5f5",
+                                                             borderRadius: "8px",
+                                                             boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+                                                             mt: 1,
+                                                         },
+                                                     },
+                                                 }}
                                              >
-                                                 <MenuItem value="default" sx={{ fontSize: "14px", color: "#333" }}>Default View</MenuItem>
-                                                 <MenuItem value="grid" sx={{ fontSize: "14px", color: "#333" }}>Grid View</MenuItem>
+                                                 <MenuItem value="default" sx={{fontSize: "14px", color: "#333"}}>Default
+                                                     View</MenuItem>
+                                                 <MenuItem value="grid" sx={{fontSize: "14px", color: "#333"}}>Grid
+                                                     View</MenuItem>
                                              </Select>
                                          </Box>
                                      </>
