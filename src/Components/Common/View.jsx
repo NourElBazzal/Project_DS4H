@@ -22,8 +22,9 @@ export const View = ({viewId}) => {
     useEffect(() => {
         if (!data) return;
         const {data: content, headers} = data;
+        const contentType = headers['content-type'].replaceAll('+getViewContent', '')
 
-        if (headers['content-type'] === 'text/dot' && graphvizRef.current) {
+        if (contentType === 'text/dot' && graphvizRef.current) {
             graphviz(graphvizRef.current).renderDot(content);
         }
     }, [data]);
