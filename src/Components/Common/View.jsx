@@ -16,6 +16,11 @@ export const View = ({viewId}) => {
         isLoading: loading
     } = useSWR(`https://dronic.i3s.unice.fr:8080/api?username=user&password=test&endpoint=GetViewContent&index=${viewId}`, fetcher);
 
+    const {
+        data: allViews,
+        isLoading: loadingAllViews,
+        error: errorAllViews
+    } = useSWR('https://dronic.i3s.unice.fr:8080/api?username=user&password=test&endpoint=GetNodeInfo', fetcher);
 
     const graphvizRef = useRef(null);
 
@@ -35,141 +40,159 @@ export const View = ({viewId}) => {
         }
         const contentType = headers['content-type'].replaceAll('+getViewContent', '')
 
-        if (contentType === 'text/json+xy2') {
-            const parsedChartData = parseNivoChartData(content);
+        if (contentType === 'text/json') {
+            if (loadingAllViews) {
+                return <div className="loading-container">
+                    <CircularProgress/>
+                </div>
+            }
 
-            return (
-                <div style={{height: 400, width: 800}}>
-                    <ResponsiveLine
-                        data={parsedChartData}
-                        margin={{top: 50, right: 110, bottom: 50, left: 60}}
-                        xScale={{type: 'linear'}}
-                        yScale={{type: 'linear', min: 'auto', max: 'auto', stacked: false}}
-                        axisBottom={{
-                            legend: 'X Axis',
-                            legendOffset: 36,
-                            legendPosition: 'middle',
-                        }}
-                        axisLeft={{
-                            legend: 'Y Axis',
-                            legendOffset: -40,
-                            legendPosition: 'middle',
-                        }}
-                        colors={{scheme: 'set2'}}
-                        pointSize={10}
-                        pointColor={{theme: 'background'}}
-                        pointBorderWidth={2}
-                        useMesh={true}
-                        legends={[
-                            {
-                                anchor: 'bottom-right',
-                                direction: 'column',
-                                justify: false,
-                                translateX: 100,
-                                translateY: 0,
-                                itemsSpacing: 0,
-                                itemDirection: 'left-to-right',
-                                itemWidth: 80,
-                                itemHeight: 20,
-                                itemOpacity: 0.75,
-                                symbolSize: 12,
-                                symbolShape: 'circle',
-                            },
-                        ]}
-                    />
-                </div>
-            );
-        } else if (contentType === 'text/json+distribution') {
-            const barChartData = parseBarChartData(content);
-            const keys = Object.keys(Object.values(content).reduce((a, b) => Object.assign({}, a, b)))
-            return (
-                <div style={{height: 400, width: 800}}>
-                    <ResponsiveBar
-                        data={barChartData}
-                        keys={keys}
-                        indexBy={"group"}
-                        margin={{top: 50, right: 130, bottom: 50, left: 60}}
-                        padding={0.3}
-                        groupMode="grouped"
-                        valueScale={{type: 'linear'}}
-                        indexScale={{type: 'band', round: true}}
-                        colors={{scheme: 'nivo'}}
-                        defs={[
-                            {
-                                id: 'dots',
-                                type: 'patternDots',
-                                background: 'inherit',
-                                color: '#38bcb2',
-                                size: 4,
-                                padding: 1,
-                                stagger: true
-                            },
-                            {
-                                id: 'lines',
-                                type: 'patternLines',
-                                background: 'inherit',
-                                color: '#eed312',
-                                rotation: -45,
-                                lineWidth: 6,
-                                spacing: 10
-                            }
-                        ]}
-                        borderColor={{
-                            from: 'color',
-                            modifiers: [
-                                [
-                                    'darker',
-                                    1.6
+            if (errorAllViews) {
+                return <div className="error-message">Error: {errorAllViews.message}</div>
+            }
+
+            if (!allViews) {
+                return <div>Error: Data is null.</div>;
+            }
+
+            const viewInfo = allViews.data.result.views[viewId]
+
+            if (viewInfo.dialect === 'xy2') {
+                const parsedChartData = parseNivoChartData(content);
+
+                return (
+                    <div style={{height: 400, width: 800}}>
+                        <ResponsiveLine
+                            data={parsedChartData}
+                            margin={{top: 50, right: 110, bottom: 50, left: 60}}
+                            xScale={{type: 'linear'}}
+                            yScale={{type: 'linear', min: 'auto', max: 'auto', stacked: false}}
+                            axisBottom={{
+                                legend: 'X Axis',
+                                legendOffset: 36,
+                                legendPosition: 'middle',
+                            }}
+                            axisLeft={{
+                                legend: 'Y Axis',
+                                legendOffset: -40,
+                                legendPosition: 'middle',
+                            }}
+                            colors={{scheme: 'set2'}}
+                            pointSize={10}
+                            pointColor={{theme: 'background'}}
+                            pointBorderWidth={2}
+                            useMesh={true}
+                            legends={[
+                                {
+                                    anchor: 'bottom-right',
+                                    direction: 'column',
+                                    justify: false,
+                                    translateX: 100,
+                                    translateY: 0,
+                                    itemsSpacing: 0,
+                                    itemDirection: 'left-to-right',
+                                    itemWidth: 80,
+                                    itemHeight: 20,
+                                    itemOpacity: 0.75,
+                                    symbolSize: 12,
+                                    symbolShape: 'circle',
+                                },
+                            ]}
+                        />
+                    </div>
+                );
+            } else if (viewInfo.dialect === 'distribution') {
+                const barChartData = parseBarChartData(content);
+                const keys = Object.keys(Object.values(content).reduce((a, b) => Object.assign({}, a, b)))
+                return (
+                    <div style={{height: 400, width: 800}}>
+                        <ResponsiveBar
+                            data={barChartData}
+                            keys={keys}
+                            indexBy={"group"}
+                            margin={{top: 50, right: 130, bottom: 50, left: 60}}
+                            padding={0.3}
+                            groupMode="grouped"
+                            valueScale={{type: 'linear'}}
+                            indexScale={{type: 'band', round: true}}
+                            colors={{scheme: 'nivo'}}
+                            defs={[
+                                {
+                                    id: 'dots',
+                                    type: 'patternDots',
+                                    background: 'inherit',
+                                    color: '#38bcb2',
+                                    size: 4,
+                                    padding: 1,
+                                    stagger: true
+                                },
+                                {
+                                    id: 'lines',
+                                    type: 'patternLines',
+                                    background: 'inherit',
+                                    color: '#eed312',
+                                    rotation: -45,
+                                    lineWidth: 6,
+                                    spacing: 10
+                                }
+                            ]}
+                            borderColor={{
+                                from: 'color',
+                                modifiers: [
+                                    [
+                                        'darker',
+                                        1.6
+                                    ]
                                 ]
-                            ]
-                        }}
-                        labelSkipWidth={12}
-                        labelSkipHeight={12}
-                        labelTextColor={{
-                            from: 'color',
-                            modifiers: [
-                                [
-                                    'darker',
-                                    1.6
+                            }}
+                            labelSkipWidth={12}
+                            labelSkipHeight={12}
+                            labelTextColor={{
+                                from: 'color',
+                                modifiers: [
+                                    [
+                                        'darker',
+                                        1.6
+                                    ]
                                 ]
-                            ]
-                        }}
-                        legends={[
-                            {
-                                dataFrom: 'keys',
-                                anchor: 'bottom-right',
-                                direction: 'column',
-                                justify: false,
-                                translateX: 120,
-                                translateY: 0,
-                                itemsSpacing: 2,
-                                itemWidth: 100,
-                                itemHeight: 20,
-                                itemDirection: 'left-to-right',
-                                itemOpacity: 0.85,
-                                symbolSize: 20,
-                                effects: [
-                                    {
-                                        on: 'hover',
-                                        style: {
-                                            itemOpacity: 1
+                            }}
+                            legends={[
+                                {
+                                    dataFrom: 'keys',
+                                    anchor: 'bottom-right',
+                                    direction: 'column',
+                                    justify: false,
+                                    translateX: 120,
+                                    translateY: 0,
+                                    itemsSpacing: 2,
+                                    itemWidth: 100,
+                                    itemHeight: 20,
+                                    itemDirection: 'left-to-right',
+                                    itemOpacity: 0.85,
+                                    symbolSize: 20,
+                                    effects: [
+                                        {
+                                            on: 'hover',
+                                            style: {
+                                                itemOpacity: 1
+                                            }
                                         }
-                                    }
-                                ]
-                            }
-                        ]}
-                        role="application"
-                        ariaLabel="Nivo bar chart demo"
-                        barAriaLabel={e => e.id + ": " + e.formattedValue + " in country: " + e.indexValue}
-                    />
-                </div>
-            )
-        } else if (contentType === 'text/json') {
-            return (
-                <div className="content-container">
-                    <CustomCodeBlock language="json" code={JSON.stringify(content, null, "\t")}/>
-                </div>
-            );
+                                    ]
+                                }
+                            ]}
+                            role="application"
+                            ariaLabel="Nivo bar chart demo"
+                            barAriaLabel={e => e.id + ": " + e.formattedValue + " in country: " + e.indexValue}
+                        />
+                    </div>
+                )
+            } else {
+                return (
+                    <div className="content-container">
+                        <CustomCodeBlock language="json" code={JSON.stringify(content, null, "\t")}/>
+                    </div>
+                );
+            }
         } else if (contentType === 'text/html') {
             return (
                 <div className="content-container html-content">
@@ -215,7 +238,7 @@ export const View = ({viewId}) => {
                 </div>
             );
         }
-    }, []);
+    }, [allViews, errorAllViews, loadingAllViews, viewId]);
 
     const parseNivoChartData = (content) => {
         const result = [];

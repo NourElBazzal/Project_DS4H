@@ -6,7 +6,7 @@ import React from 'react';
 import {View} from "../Common/View.jsx";
 
 
-const fetcher = url => axios.get(url).then(res => res.data);
+const fetcher = url => axios.get(url)
 
 const GridView = () => {
     const navigate = useNavigate();
@@ -36,11 +36,11 @@ const GridView = () => {
         return <div>Error: {error.message}</div>;
     }
 
-    if (!data) {
+    if (!data || !data.data) {
         return <div>Error: Data is null.</div>;
     }
 
-    const {result} = data; // Extract the result object from API response
+    const {data: {result}} = data; // Extract the result object from API response
     const views = result?.views || []; // Safely access the views array
 
     return (

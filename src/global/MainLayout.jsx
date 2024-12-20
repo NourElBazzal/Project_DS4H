@@ -6,7 +6,7 @@ import axios from "axios";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import {Box, MenuItem, Select} from "@mui/material";
 
-const fetcher = url => axios.get(url).then(res => res.data)
+const fetcher = url => axios.get(url)
 
 const MainLayout = () => {
     const navigate = useNavigate();
@@ -22,7 +22,8 @@ const MainLayout = () => {
         isLoading: loading
     } = useSWR('https://dronic.i3s.unice.fr:8080/api?username=user&password=test&endpoint=GetNodeInfo', fetcher);
 
-    const NAVIGATION = !loading && !error ? data.result.views.map((view, index) => ({
+
+    const NAVIGATION = !loading && !error ? data.data.result.views.map((view, index) => ({
         kind: 'link',
         title: view.name,
         segment: `information/${index}`,
