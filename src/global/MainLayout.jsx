@@ -6,28 +6,33 @@ import axios from "axios";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import {Box, MenuItem, Select} from "@mui/material";
 
-const fetcher = url => axios.get(url).then(res => res.data)
+const fetcher = url => axios.get(url)
 
 const MainLayout = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [currentView, setCurrentView] = useState(location.pathname.startsWith("/viewer") ? "grid" : "default");
+    const [currentView, setCurrentView] = useState(location.pathname.startsWith("/grid") ? "grid" : "default");
 
     // Determine if the current path is `/viewer` (GridView page)
-    const hideSidebar = location.pathname.startsWith("/viewer");
+    const hideSidebar = location.pathname.startsWith("/grid");
 
-    const { data, error, isLoading:loading } = useSWR('https://dronic.i3s.unice.fr:8080/api?username=user&password=test&endpoint=GetNodeInfo', fetcher);
+    const {
+        data,
+        error,
+        isLoading: loading
+    } = useSWR('https://dronic.i3s.unice.fr:8080/api?username=user&password=test&endpoint=GetNodeInfo', fetcher);
 
-    const NAVIGATION = !loading && !error ? data.result.views.map((view, index) => ({
+
+    const NAVIGATION = !loading && !error ? data.data.result.views.map((view, index) => ({
         kind: 'link',
         title: view.name,
         segment: `information/${index}`,
-        icon: <MenuOutlinedIcon />
+        icon: <MenuOutlinedIcon/>
     })) : [{
         kind: 'link',
         title: 'Loading...',
         segment: 'home',
-        icon: <MenuOutlinedIcon />
+        icon: <MenuOutlinedIcon/>
     }];
 
     const handleViewChange = (event) => {
@@ -35,40 +40,104 @@ const MainLayout = () => {
         setCurrentView(selectedView);
         // Navigate to the appropriate page
         if (selectedView === "grid") {
-            navigate(`/viewer/${location.pathname.split("/")[2]}`);
+            navigate(`/grid`);
         } else if (selectedView === "default") {
-            navigate(`/information/${location.pathname.split("/")[2]}`);
+            navigate(`/information/0`);
         }
     };
 
     return (
-        <DashboardLayout navigation={NAVIGATION} hideNavigation={hideSidebar} disableCollapsibleSidebar={hideSidebar} slots={{
-            toolbarActions: () => {
-                return (
-                    <>
-                    {/* DROPDOWN VIEW SELECTOR */}
-                        <Box display="flex" alignItems="center">
-                            <Select
-                                value={currentView}
-                                onChange={handleViewChange}
-                                sx={{
-                                    minWidth: 120,
-                                    backgroundColor: "#fff",
-                                    borderRadius: "4px",
-                                }}
-                            >
-                                <MenuItem value="default">Default View</MenuItem>
-                                <MenuItem value="grid">Grid View</MenuItem>
-                            </Select>
-                        </Box>
-                    </>
-                );
+        <Box sx={{
+            // Selectors to target the sidebar scrollbar
+            '& .MuiDrawer-root .MuiDrawer-paper, & [role="navigation"]': {
+                '&::-webkit-scrollbar': {
+                    display: 'none'
+                },
+                msOverflowStyle: 'none',
+                scrollbarWidth: 'none',
+                overflow: '-moz-scrollbars-none'  // Old Firefox
+            },
+            // Target any potential nested scrollable elements
+            '& .MuiDrawer-root .MuiDrawer-paper *, & [role="navigation"] *': {
+                '&::-webkit-scrollbar': {
+                    display: 'none'
+                },
+                msOverflowStyle: 'none',
+                scrollbarWidth: 'none',
+                overflow: '-moz-scrollbars-none'  // Old Firefox
             }
         }}>
-            <PageContainer>
-                <Outlet />
-            </PageContainer>
-        </DashboardLayout>
+            <DashboardLayout navigation={NAVIGATION} hideNavigation={hideSidebar} disableCollapsibleSidebar={hideSidebar}
+                             slots={{
+                                 toolbarActions: () => {
+                                     return (
+                                         <>
+                                             {/* DROPDOWN VIEW SELECTOR */}
+                                             <Box display="flex" alignItems="center">
+                                                 <Select
+                                                     value={currentView}
+                                                     onChange={handleViewChange}
+                                                     sx={{
+                                                         '& .MuiOutlinedInput-notchedOutline': {
+                                                             border: 'none'
+                                                         },
+                                                         '&.MuiOutlinedInput-root': {
+                                                             minWidth: 120,
+                                                             backgroundColor: 'transparent',
+                                                             '&:hover .MuiOutlinedInput-notchedOutline': {
+                                                                 border: 'none'
+                                                             },
+                                                             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                                                 border: 'none'
+                                                             }
+                                                         },
+                                                         '& .MuiSelect-select': {
+                                                             padding: '8px 14px',
+                                                             borderRadius: '8px',
+                                                             '&:hover': {
+                                                                 backgroundColor: 'rgba(0, 0, 0, 0.04)'
+                                                             }
+                                                         },
+                                                         '& .MuiSelect-icon': {
+                                                             color: 'inherit'
+                                                         }
+                                                     }}
+                                                     MenuProps={{
+                                                         PaperProps: {
+                                                             sx: {
+                                                                 backgroundColor: '#fff',
+                                                                 borderRadius: '8px',
+                                                                 boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                                                                 mt: 1,
+                                                                 '& .MuiMenuItem-root': {
+                                                                     padding: '10px 16px',
+                                                                     '&:hover': {
+                                                                         backgroundColor: 'rgba(0, 0, 0, 0.04)'
+                                                                     },
+                                                                     '&.Mui-selected': {
+                                                                         backgroundColor: 'rgba(0, 0, 0, 0.08)',
+                                                                         '&:hover': {
+                                                                             backgroundColor: 'rgba(0, 0, 0, 0.12)'
+                                                                         }
+                                                                     }
+                                                                 }
+                                                             }
+                                                         }
+                                                     }}
+                                                 >
+                                                     <MenuItem value="default" sx={{ fontSize: "14px", color: "#333" }}>Default View</MenuItem>
+                                                     <MenuItem value="grid" sx={{ fontSize: "14px", color: "#333" }}>Grid View</MenuItem>
+                                                 </Select>
+                                             </Box>
+                                         </>
+                                     );
+                                 }
+                             }}>
+                <PageContainer>
+                    <Outlet/>
+                </PageContainer>
+            </DashboardLayout>
+        </Box>
     );
 };
 

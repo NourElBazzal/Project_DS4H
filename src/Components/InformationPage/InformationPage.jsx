@@ -1,24 +1,15 @@
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import {useParams} from 'react-router-dom';
 import './InformationPage.css';
-import useSWR from 'swr';
-import {graphviz} from 'd3-graphviz';
-import React, { useEffect, useRef } from 'react';
-import CircularProgress from "@mui/material/CircularProgress";
+import React from 'react';
 import {useTitle} from "../../global/useTitle";
-import {ResponsiveBar} from "@nivo/bar";
-import {ResponsiveLine} from "@nivo/line";
-import SyntaxHighlighter from "react-syntax-highlighter/src/light";
-import {materialLight} from "react-syntax-highlighter/src/styles/prism";
-
-const fetcher = url => axios.get(url);
+import {View} from "../Common/View.jsx";
 
 const InformationPage = () => {
-    const { viewName } = useParams();
-    let { data, error, isLoading: loading } = useSWR(`https://dronic.i3s.unice.fr:8080/api?username=user&password=test&endpoint=GetViewContent&index=${viewName}`, fetcher);
+    const {viewId} = useParams();
 
-    const graphvizRef = useRef(null);
+    useTitle(`Information for View ${viewId}`);
 
+<<<<<<< HEAD
     useTitle(`Information for View ${viewName}`);
 
     useEffect(() => {
@@ -263,8 +254,15 @@ const InformationPage = () => {
                 <h2>Content:</h2>
                 {displayContent(content, headers)}
             </div>
+=======
+    return <div className="information-page">
+        <h1>Information for View {viewId}</h1>
+        <div>
+            <h2>Content:</h2>
+            <View viewId={viewId}/>
+>>>>>>> 670b60638e9a2d9b1a84f0f9250b19c213fcd174
         </div>
-    );
+    </div>
 };
 
 export default InformationPage;
