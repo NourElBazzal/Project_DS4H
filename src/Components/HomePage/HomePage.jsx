@@ -13,7 +13,7 @@ const HomePage = () => {
         data,
         isLoading: loading
     } = useSWR('https://dronic.i3s.unice.fr:8080/api?username=user&password=test&endpoint=GetNodeInfo', fetcher);
-    useTitle("Current Node View");
+    useTitle("Home");
 
     if (loading) {
         return (
