@@ -1,16 +1,16 @@
 import {useNavigate} from 'react-router-dom';
-import {Card, CardContent, CircularProgress, Grid2, Typography} from '@mui/material';
+import {Box, Card, CardContent, CircularProgress, Grid2, Typography} from '@mui/material';
 import useSWR from 'swr';
 import axios from 'axios';
 import React from 'react';
 import {View} from "../Common/View.jsx";
-
+import {useTitle} from "../../global/useTitle.jsx";
 
 const fetcher = url => axios.get(url)
 
 const GridView = () => {
     const navigate = useNavigate();
-
+    useTitle("Views");
     const {
         data,
         isLoading: loading,
@@ -19,16 +19,16 @@ const GridView = () => {
 
     if (loading) {
         return (
-            <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100vh",
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100vh",
                 }}
             >
                 <CircularProgress/>
-            </div>
+            </Box>
         );
     }
 
@@ -44,36 +44,35 @@ const GridView = () => {
     const views = result?.views || []; // Safely access the views array
 
     return (
-        <div style={{padding: '40px', maxWidth: '1200px', margin: '0 auto'}}>
+        <Box sx={{padding: {xs: '5px', md: '40px'}, maxWidth: '100%', margin: '0 auto'}}>
             <Typography variant="h4" gutterBottom sx={{marginBottom: '32px'}}>
                 Views
             </Typography>
             <Grid2 container spacing={4}>
                 {
                     views.map((view, index) => (
-                        <Grid2 xs={12} sm={6} key={index}>
+                        <Grid2 size={{xs: 12, sm: 6}} key={index}>
                             <Card
                                 sx={{
                                     cursor: 'pointer',
-                                    height: '400px',
-                                    width: '520px',
+                                    aspectRatio: '1',
                                     transition: 'transform 0.2s, box-shadow 0.2s',
                                     '&:hover': {
                                         transform: 'translateY(-4px)',
                                         boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
                                     },
                                     display: 'flex',
-                                    flexDirection: 'column'
+                                    flexDirection: 'column',
                                 }}
                                 onClick={() => navigate(`/information/${index}`)}
                             >
-                                <CardContent 
+                                <CardContent
                                     sx={{
                                         padding: '24px',
                                         height: '100%',
                                         display: 'flex',
                                         flexDirection: 'column',
-                                        overflow: 'hidden'
+                                        overflow: 'hidden',
                                     }}
                                 >
                                     <Typography variant="h6" sx={{
@@ -82,8 +81,8 @@ const GridView = () => {
                                     }}>
                                         {view.name}
                                     </Typography>
-                                    <Typography 
-                                        variant="body2" 
+                                    <Typography
+                                        variant="body2"
                                         color="textSecondary"
                                         sx={{
                                             flex: 1,
@@ -104,7 +103,7 @@ const GridView = () => {
                     ))
                 }
             </Grid2>
-        </div>
+        </Box>
     );
 };
 

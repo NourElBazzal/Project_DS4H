@@ -13,7 +13,7 @@ const MainLayout = () => {
     const location = useLocation();
     const [currentView, setCurrentView] = useState(location.pathname.startsWith("/grid") ? "grid" : "default");
 
-    // Determine if the current path is `/viewer` (GridView page)
+    // Determine if the current path is `/grid` (GridView page)
     const hideSidebar = location.pathname.startsWith("/grid");
 
     const {
@@ -67,7 +67,8 @@ const MainLayout = () => {
                 overflow: '-moz-scrollbars-none'  // Old Firefox
             }
         }}>
-            <DashboardLayout navigation={NAVIGATION} hideNavigation={hideSidebar} disableCollapsibleSidebar={hideSidebar}
+            <DashboardLayout navigation={NAVIGATION} hideNavigation={hideSidebar}
+                             disableCollapsibleSidebar={hideSidebar}
                              slots={{
                                  toolbarActions: () => {
                                      return (
@@ -124,9 +125,11 @@ const MainLayout = () => {
                                                              }
                                                          }
                                                      }}
-                                                 >
-                                                     <MenuItem value="default" sx={{ fontSize: "14px", color: "#333" }}>Default View</MenuItem>
-                                                     <MenuItem value="grid" sx={{ fontSize: "14px", color: "#333" }}>Grid View</MenuItem>
+                                                     variant="outlined">
+                                                     <MenuItem value="default" sx={{fontSize: "14px"}}>Default
+                                                         Layout</MenuItem>
+                                                     <MenuItem value="grid" sx={{fontSize: "14px"}}>Grid
+                                                         Layout</MenuItem>
                                                  </Select>
                                              </Box>
                                          </>
