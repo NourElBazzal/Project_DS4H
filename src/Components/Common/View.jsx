@@ -103,7 +103,7 @@ export const View = ({viewId}) => {
                 );
             } else if (viewInfo.dialect === 'distribution') {
                 const barChartData = parseBarChartData(content);
-                const keys = Object.keys(Object.values(content).reduce((a, b) => Object.assign({}, a, b)))
+                const keys = Object.keys(Object.values(content).reduce((a, b) => Object.assign({}, a, b))).sort();
                 return (
                     <div style={{height: 400, width: 800}}>
                         <ResponsiveBar
