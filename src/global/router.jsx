@@ -23,12 +23,12 @@ export const router = createBrowserRouter([
                         element: <HomePage/>,
                     },
                     {
-                        path: '/information/:viewName',
+                        path: '/information/:viewId',
                         element: <InformationPage/>,
                     },
                     {
-                        path: '/viewer/:viewName',
-                        element: <GridViewer />
+                        path: '/grid',
+                        element: <GridViewer/>
                     }
                 ]
             }]
