@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import useSWR from 'swr';
 import CircularProgress from "@mui/material/CircularProgress";
 import {useTitle} from "../../global/useTitle";
+import Box from '@mui/material/Box';
 
 const fetcher = url => axios.get(url).then(res => res.data)
 
@@ -35,7 +36,6 @@ const HomePage = () => {
         <div className="home-page">
             <h1>Vue du Noeud Courant</h1>
             <h2>ID: {data.result.id}</h2>
-
             <h3>Vues Disponibles:</h3>
             <ul>
                 {data.result.views.map((view, index) => (

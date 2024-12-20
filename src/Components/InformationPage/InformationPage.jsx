@@ -31,7 +31,7 @@ const InformationPage = () => {
     }, [data]);
 
     const displayContent = (content, headers) => {
-        if (headers['content-type'] === 'text/json+xy2') {
+        if (headers['content-type'] === 'text/json') {
             const parsedChartData = parseNivoChartData(content);
             console.log(parsedChartData)
             return (
