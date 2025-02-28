@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import './LoginForm.css';
-import { FaUser, FaEye, FaEyeSlash } from "react-icons/fa";
+import {FaEye, FaEyeSlash, FaUser} from "react-icons/fa";
 import logo from '../Assets/i3S_RVB_Couleur.png';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
 import {useTitle} from "../../global/useTitle";
 
 const LoginForm = () => {
@@ -23,6 +22,8 @@ const LoginForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            // TODO: Add back the login request
+            /*
             // Send the login request to the backend
             const response = await axios.get('https://dronic.i3s.unice.fr:8080/api', {
                 params: { username, password },
@@ -35,6 +36,10 @@ const LoginForm = () => {
             } else {
                 setError("Invalid username or password");
             }
+             */
+
+            localStorage.setItem("sessionData", JSON.stringify({"session ID": "1234"}));
+            navigate('/home'); // Redirect to HomePage
         } catch (err) {
             console.error(err);
             setError("Failed to connect to the server");
@@ -46,7 +51,7 @@ const LoginForm = () => {
             <div className="wrapper">
                 <form onSubmit={handleSubmit}>
                     <div className="image-container">
-                        <img src={logo} alt="Logo" />
+                        <img src={logo} alt="Logo"/>
                     </div>
                     <div className={`input-box ${username ? 'not-empty' : ''}`}>
                         <input
@@ -57,7 +62,7 @@ const LoginForm = () => {
                             onChange={(e) => setUsername(e.target.value)}
                             required
                         />
-                        <FaUser className="icon" />
+                        <FaUser className="icon"/>
                     </div>
                     <div className={`input-box ${password ? 'not-empty' : ''}`}>
                         <input
@@ -69,13 +74,13 @@ const LoginForm = () => {
                             required
                         />
                         {passwordVisible ? (
-                            <FaEyeSlash className="toggle-icon icon" onClick={togglePasswordVisibility} />
+                            <FaEyeSlash className="toggle-icon icon" onClick={togglePasswordVisibility}/>
                         ) : (
-                            <FaEye className="toggle-icon icon" onClick={togglePasswordVisibility} />
+                            <FaEye className="toggle-icon icon" onClick={togglePasswordVisibility}/>
                         )}
                     </div>
                     {error && <p className="error-message">{error}</p>}
-                
+
                     <button type="submit"><span>Se connecter</span></button>
                 </form>
             </div>

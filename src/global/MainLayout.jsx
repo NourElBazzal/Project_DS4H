@@ -20,7 +20,7 @@ const MainLayout = () => {
         data,
         error,
         isLoading: loading
-    } = useSWR('https://dronic.i3s.unice.fr:8080/api?username=user&password=test&endpoint=GetNodeInfo', fetcher);
+    } = useSWR('https://dronic.i3s.unice.fr:8080/api?endpoint=GetNodeInfo', fetcher);
 
 
     const NAVIGATION = !loading && !error ? data.data.result.views.map((view, index) => ({

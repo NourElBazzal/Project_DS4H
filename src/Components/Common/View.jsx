@@ -16,13 +16,13 @@ export const View = ({viewId}) => {
         data,
         error,
         isLoading: loading
-    } = useSWR(`https://dronic.i3s.unice.fr:8080/api?username=user&password=test&endpoint=GetViewContent&index=${viewId}`, fetcher);
+    } = useSWR(`https://dronic.i3s.unice.fr:8080/api?endpoint=GetViewContent&index=${viewId}`, fetcher);
 
     const {
         data: allViews,
         isLoading: loadingAllViews,
         error: errorAllViews
-    } = useSWR('https://dronic.i3s.unice.fr:8080/api?username=user&password=test&endpoint=GetNodeInfo', fetcher);
+    } = useSWR('https://dronic.i3s.unice.fr:8080/api?endpoint=GetNodeInfo', fetcher);
 
     const graphvizRef = useRef(null);
 

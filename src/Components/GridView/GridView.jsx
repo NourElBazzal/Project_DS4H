@@ -15,7 +15,7 @@ const GridView = () => {
         data,
         isLoading: loading,
         error
-    } = useSWR('https://dronic.i3s.unice.fr:8080/api?username=user&password=test&endpoint=GetNodeInfo', fetcher);
+    } = useSWR('https://dronic.i3s.unice.fr:8080/api?endpoint=GetNodeInfo', fetcher);
 
     if (loading) {
         return (
